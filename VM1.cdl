@@ -25,8 +25,8 @@ region rDomainEV3 {
 			"$(MRUBY_LIB_DIR)/SharedMemory.rb "
 			"$(APP_RB)";
 		cInit = VM_TECSInitializer.eInitialize;
-		cMalloc = TLSFMalloc1.eMalloc;
-		// cMalloc = TLSFStatics.eMalloc;
+		// cMalloc = TLSFMalloc1.eMalloc;
+		cMalloc = TLSFStatics.eMalloc;
 	};
 
 	cell nMruby::tMrubyTaskBody MrubyTaskBody {
@@ -48,18 +48,18 @@ region rDomainEV3 {
     };
 };
 
-// import("tTLSFStatics.cdl");
+import("tTLSFStatics.cdl");
 
-// region rDomainEV3 {
-// 	cell tTLSFStatics TLSFStatics {
-// 		cMallocStatics = TLSFMalloc1.eMallocStatics;
-// 		cMalloc = TLSFMalloc1.eMalloc;
-// 	};
+region rDomainEV3 {
+	cell tTLSFStatics TLSFStatics {
+		cMallocStatics = TLSFMalloc1.eMallocStatics;
+		cMalloc = TLSFMalloc1.eMalloc;
+	};
 
-// 	cell tCyclicHandler CyclicHandler {
-// 		ciBody = TLSFStatics.eiBody;
-//         attribute 	= C_EXP("TA_STA");
-//         cyclicTime 	= 4;
-//         cyclicPhase 	= 1;
-// 	};
-// };
+	cell tCyclicHandler CyclicHandler {
+		ciBody = TLSFStatics.eiBody;
+        attribute 	= C_EXP("TA_STA");
+        cyclicTime 	= 4;
+        cyclicPhase 	= 1;
+	};
+};
