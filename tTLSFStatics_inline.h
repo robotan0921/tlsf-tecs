@@ -9,10 +9,10 @@
  * Ц│╝Ц┌┬Ц│├Ц│╚Е░█Е┴█, Ц┐∙Ц┌╘Ц┐╚Ц┐─Ц┌▓Е╓┴Ф⌡╢Ц│≈Ц│╕Ц│▀Ц┌┴Д©╝Ф╜ёЦ│≈Ц│╬Ц│≥
  */
 /* #[<PREAMBLE>]#
- * #[<...>]# ╓╚╓И #[</...>]# ╓г╟о╓ч╓Л╓©╔Ё╔А╔С╔х╓ойт╫╦╓╥╓й╓╓╓г╓╞╓ю╓╣╓╓
- * tecsmerge ╓к╓Х╓К╔ч║╪╔╦╓к╩хмя╓╣╓Л╓ч╓╧
+ * #[<...>]# Ц│▀Ц┌┴ #[</...>]# Ц│╖Е⌡╡Ц│╬Ц┌▄Ц│÷Ц┌ЁЦ┐║Ц┐ЁЦ┐┬Ц│╞Г╥╗И⌡├Ц│≈Ц│╙Ц│└Ц│╖Ц│▐Ц│═Ц│∙Ц│└
+ * tecsmerge Ц│╚Ц┌┬Ц┌▀Ц┐·Ц┐╪Ц┌╦Ц│╚Д╫©Г■╗Ц│∙Ц┌▄Ц│╬Ц│≥
  *
- * б╟ю╜╔╒╔╞╔╩╔╧╔ч╔╞╔М #_CAAM_#
+ * Е╠·Ф─╖Ц┌╒Ц┌╞Ц┌╩Ц┌╧Ц┐·Ц┌╞Ц┐╜ #_CAAM_#
  * maxSize          size_t           ATTR_maxSize    
  * time             int32_t*         VAR_time        
  * malloc           int32_t*         VAR_malloc      
@@ -21,7 +21,7 @@
  * reallocNum       int32_t          VAR_reallocNum  
  * freeNum          int32_t          VAR_freeNum     
  *
- * ╦ф╓с╦Щ╢ь©Т #_TCPF_#
+ * Е▒╪Ц│ЁЕ▐ёИ√╒Ф∙╟ #_TCPF_#
  * require port: signature:sKernel context:task
  *   ER             sleep( );
  *   ER             sleepTimeout( TMO timeout );
@@ -207,7 +207,7 @@ eiBody_main(CELLIDX idx)
 }
 
 /* #[<POSTAMBLE>]#
- *   ╓Ё╓Л╓Х╓Й╡╪╓кхС╪У╓╠╦Щ╢ь©Т╓Р╫Я╓╜╓ч╓╧
+ *   Ц│⌠Ц┌▄Ц┌┬Ц┌┼Д╦▀Ц│╚И²·Е▐≈Ц│▒Е▐ёИ√╒Ф∙╟Ц┌▓Ф⌡╦Ц│█Ц│╬Ц│≥
  * #[</POSTAMBLE>]#*/
 
 #endif /* tTLSFStatics_INLINEH */
