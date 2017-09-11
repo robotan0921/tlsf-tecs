@@ -1,0 +1,65 @@
+/**
+ *  VM1.cdl
+ *
+ */
+import("EV3_common.cdl");
+
+//[domain(HRP2, "trusted")]
+//[domain(HRP2, "nontrusted")]
+region rDomainEV3 {
+	cell nMruby::tMrubyVM MrubyVM {
+
+		mrubyFile = "$(MRUBY_LIB_DIR)/EV3_common.rb "
+			"$(MRUBY_LIB_DIR)/RTOS.rb "
+			"$(MRUBY_LIB_DIR)/Speaker.rb "
+			"$(MRUBY_LIB_DIR)/Button.rb "
+			"$(MRUBY_LIB_DIR)/Motor.rb "
+			"$(MRUBY_LIB_DIR)/UltrasonicSensor.rb "
+			"$(MRUBY_LIB_DIR)/GyroSensor.rb "
+			"$(MRUBY_LIB_DIR)/ColorSensor.rb "
+			"$(MRUBY_LIB_DIR)/TouchSensor.rb "
+			"$(MRUBY_LIB_DIR)/LED.rb "
+			"$(MRUBY_LIB_DIR)/LCD.rb "
+			"$(MRUBY_LIB_DIR)/Battery.rb "
+			"$(MRUBY_LIB_DIR)/Balancer.rb "
+			"$(MRUBY_LIB_DIR)/SharedMemory.rb "
+			"$(APP_RB)";
+		cInit = VM_TECSInitializer.eInitialize;
+		cMalloc = TLSFMalloc1.eMalloc;
+		// cMalloc = TLSFStatics.eMalloc;
+	};
+
+	cell nMruby::tMrubyTaskBody MrubyTaskBody {
+      cMrubyVM = MrubyVM.eMrubyVM;
+    };
+
+	cell tTask MrubyTask1 {
+	// 呼び口の結合
+		cBody = MrubyTaskBody.eMrubyBody;
+		//* 属性の設定
+		taskAttribute 	= C_EXP("TA_ACT");
+		priority 		= C_EXP("EV3_MRUBY_VM_PRIORITY");
+		systemStackSize = C_EXP("STACK_SIZE");
+		//userStackSize = C_EXP("STACK_SIZE");
+	};
+
+	cell tTLSFMalloc TLSFMalloc1 {
+    	memoryPoolSize = 1024 * 1024;
+    };
+};
+
+// import("tTLSFStatics.cdl");
+
+// region rDomainEV3 {
+// 	cell tTLSFStatics TLSFStatics {
+// 		cMallocStatics = TLSFMalloc1.eMallocStatics;
+// 		cMalloc = TLSFMalloc1.eMalloc;
+// 	};
+
+// 	cell tCyclicHandler CyclicHandler {
+// 		ciBody = TLSFStatics.eiBody;
+//         attribute 	= C_EXP("TA_STA");
+//         cyclicTime 	= 4;
+//         cyclicPhase 	= 1;
+// 	};
+// };
