@@ -61,6 +61,35 @@ SD_DIR = /cygdrive/h/
 #  ターゲット略称の定義
 #
 TARGET = ev3_gcc
+MRUBY_DIR = ../mruby_app
+
+#  mrubyのアプリケーションファイル名
+# APP_NAME = battery_sample.rb
+APP_NAME = button_sample.rb
+# APP_NAME = color_sample.rb
+# APP_NAME = color_sample2.rb
+# APP_NAME = color_sample3.rb
+# APP_NAME = ev3way_sample.rb
+# APP_NAME = gyro_sample.rb
+# APP_NAME = lcd_sample.rb
+# APP_NAME = lcd_sample2.rb
+# APP_NAME = lcd_sample3.rb
+# APP_NAME = led_sample.rb
+# APP_NAME = motor_sample.rb
+# APP_NAME = motor_sample2.rb
+# APP_NAME = rtos_sample.rb
+# APP_NAME = speaker_sample.rb
+# APP_NAME = speaker_sample2.rb
+# APP_NAME = touch_sample.rb
+# APP_NAME = ultrasonic_sample.rb
+
+APP_RB = $(MRUBY_DIR)/$(APP_NAME)
+
+# APP_NAME1 = sharedmemory_sample.rb
+# APP_NAME2 = sharedmemory_sample2.rb
+
+# APP_RB = $(MRUBY_DIR)/$(APP_NAME1)
+# APP_RB2 = $(MRUBY_DIR)/$(APP_NAME2)
 
 #
 #  プログラミング言語の定義
