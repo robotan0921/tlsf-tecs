@@ -1,12 +1,5 @@
-
-signature sMallocStatics {
-	size_t getMaxSize(void);
-	size_t getUsableSize(void);
-	size_t getUsedSize(void);
-	size_t getMallocSize(void);
-	size_t getFreeSize(void);
-	size_t getReallocSize(void);
-};
+import( <sMalloc.cdl> );
+import( <sMallocStatics.cdl> );
 
 celltype tTLSFStatics {
 	require tKernel.eKernel;
