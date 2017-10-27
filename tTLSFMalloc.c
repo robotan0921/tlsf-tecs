@@ -105,7 +105,7 @@
 
 
 /* Some IMPORTANT TLSF parameters */
-/* Unlike the preview TLSF versions, now they are statics */
+/* Unlike the preview TLSF versions, now they are statistics */
 #define BLOCK_ALIGN (sizeof(void *) * 2)
 
 #define MAX_FLI		(30)
@@ -781,7 +781,7 @@ eMalloc_free(CELLIDX idx, const void* ptr)
  * oneway:       false
  * #[</ENTRY_FUNC>]# */
 size_t
-eMallocStatics_getMaxSize(CELLIDX idx)
+eMallocStatistics_getMaxSize(CELLIDX idx)
 {
 	CELLCB	*p_cellcb;
 	if (VALID_IDX(idx)) {
@@ -801,7 +801,7 @@ eMallocStatics_getMaxSize(CELLIDX idx)
  * oneway:       false
  * #[</ENTRY_FUNC>]# */
 size_t
-eMallocStatics_getUsableSize(CELLIDX idx)
+eMallocStatistics_getUsableSize(CELLIDX idx)
 {
 	CELLCB	*p_cellcb;
 	if (VALID_IDX(idx)) {
@@ -822,7 +822,7 @@ eMallocStatics_getUsableSize(CELLIDX idx)
  * oneway:       false
  * #[</ENTRY_FUNC>]# */
 size_t
-eMallocStatics_getUsedSize(CELLIDX idx)
+eMallocStatistics_getUsedSize(CELLIDX idx)
 {
 	CELLCB	*p_cellcb;
 	if (VALID_IDX(idx)) {
@@ -842,7 +842,7 @@ eMallocStatics_getUsedSize(CELLIDX idx)
  * oneway:       false
  * #[</ENTRY_FUNC>]# */
 size_t
-eMallocStatics_getMallocSize(CELLIDX idx)
+eMallocStatistics_getMallocSize(CELLIDX idx)
 {
 	CELLCB	*p_cellcb;
 	if (VALID_IDX(idx)) {
@@ -862,7 +862,7 @@ eMallocStatics_getMallocSize(CELLIDX idx)
  * oneway:       false
  * #[</ENTRY_FUNC>]# */
 size_t
-eMallocStatics_getFreeSize(CELLIDX idx)
+eMallocStatistics_getFreeSize(CELLIDX idx)
 {
 	CELLCB	*p_cellcb;
 	if (VALID_IDX(idx)) {
@@ -882,7 +882,7 @@ eMallocStatics_getFreeSize(CELLIDX idx)
  * oneway:       false
  * #[</ENTRY_FUNC>]# */
 size_t
-eMallocStatics_getReallocSize(CELLIDX idx)
+eMallocStatistics_getReallocSize(CELLIDX idx)
 {
 	CELLCB	*p_cellcb;
 	if (VALID_IDX(idx)) {
