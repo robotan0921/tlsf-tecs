@@ -45,6 +45,12 @@
  *   bool_t         senseDispatch( );
  *   bool_t         senseDispatchPendingState( );
  *   bool_t         senseKernel( );
+ * call port: cMalloc signature: sMalloc context:task
+ *   int            cMalloc_initializeMemoryPool( );
+ *   void*          cMalloc_calloc( size_t nelem, size_t elem_size );
+ *   void*          cMalloc_malloc( size_t size );
+ *   void*          cMalloc_realloc( const void* ptr, size_t new_size );
+ *   void           cMalloc_free( const void* ptr );
  * call port: cMallocStatistics signature: sMallocStatistics context:task
  *   size_t         cMallocStatistics_getMaxSize( );
  *   size_t         cMallocStatistics_getUsableSize( );
@@ -52,12 +58,6 @@
  *   size_t         cMallocStatistics_getMallocSize( );
  *   size_t         cMallocStatistics_getFreeSize( );
  *   size_t         cMallocStatistics_getReallocSize( );
- * call port: cMalloc signature: sMalloc context:task
- *   int            cMalloc_initializeMemoryPool( );
- *   void*          cMalloc_calloc( size_t nelem, size_t elem_size );
- *   void*          cMalloc_malloc( size_t size );
- *   void*          cMalloc_realloc( const void* ptr, size_t new_size );
- *   void           cMalloc_free( const void* ptr );
  *
  * #[</PREAMBLE>]# */
 #include <t_syslog.h>
@@ -86,7 +86,10 @@ eMalloc_initializeMemoryPool(CELLIDX idx)
 	} /* end if VALID_IDX(idx) */
 
 	/* ここに処理本体を記述します #_TEFB_# */
-
+	VAR_mallocNum = 0;
+	VAR_reallocNum = 0;
+	VAR_freeNum = 0;
+ 	return cMalloc_initializeMemoryPool();
 }
 
 /* #[<ENTRY_FUNC>]# eMalloc_calloc
@@ -106,7 +109,7 @@ eMalloc_calloc(CELLIDX idx, size_t nelem, size_t elem_size)
 	} /* end if VALID_IDX(idx) */
 
 	/* ここに処理本体を記述します #_TEFB_# */
-
+	return cMalloc_calloc(nelem, elem_size);
 }
 
 /* #[<ENTRY_FUNC>]# eMalloc_malloc
@@ -126,6 +129,8 @@ eMalloc_malloc(CELLIDX idx, size_t size)
 	} /* end if VALID_IDX(idx) */
 
 	/* ここに処理本体を記述します #_TEFB_# */
+	VAR_mallocNum++;
+	return cMalloc_malloc(size);
 
 }
 
@@ -146,6 +151,8 @@ eMalloc_realloc(CELLIDX idx, const void* ptr, size_t new_size)
 	} /* end if VALID_IDX(idx) */
 
 	/* ここに処理本体を記述します #_TEFB_# */
+	VAR_reallocNum++;
+	return cMalloc_realloc((void *)ptr, new_size);
 
 }
 
@@ -166,6 +173,8 @@ eMalloc_free(CELLIDX idx, const void* ptr)
 	} /* end if VALID_IDX(idx) */
 
 	/* ここに処理本体を記述します #_TEFB_# */
+	VAR_freeNum++;
+	return cMalloc_free((void *)ptr);
 
 }
 
@@ -192,23 +201,13 @@ eiBody_main(CELLIDX idx)
 	} /* end if VALID_IDX(idx) */
 
 	/* ここに処理本体を記述します #_TEFB_# */
-FILE *fp;
-	fp = fopen("data.txt","w");
 
-	fprintf(fp, "[malloc]: malloc size = %d, malloc number = %d\n", cMallocStatistics_getMallocSize(), VAR_mallocNum);
-	fprintf(fp, "[malloc]: realloc size = %d, realloc number = %d\n", cMallocStatistics_getReallocSize(), VAR_reallocNum);
-	fprintf(fp, "[malloc]: free size = %d, free number = %d", cMallocStatistics_getFreeSize(), VAR_freeNum);
-
-	fclose(fp);
-
-/*
-		syslog(LOG_NOTICE, "[malloc]: malloc size = %d, malloc number = %d",
+	syslog(LOG_NOTICE, "[malloc]: malloc size = %d, malloc number = %d",
 								cMallocStatistics_getMallocSize(), VAR_mallocNum);
 	syslog(LOG_NOTICE, "[malloc]: realloc size = %d, realloc number = %d",
 								cMallocStatistics_getReallocSize(), VAR_reallocNum);
 	syslog(LOG_NOTICE, "[malloc]: free size = %d, free number = %d",
 								cMallocStatistics_getFreeSize(), VAR_freeNum);
-*/
 }
 
 
