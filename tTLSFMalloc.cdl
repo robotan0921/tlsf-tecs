@@ -3,7 +3,7 @@ import( <sMallocStatistics.cdl> );
 import( <kernel.cdl> );
 
 celltype tTLSFMalloc {
-    entry  sMalloc  eMalloc;
+    entry   sMalloc            eMalloc;
     entry   sMallocStatistics  eMallocStatistics;
     attr {
         /* memory pool size in bytes */

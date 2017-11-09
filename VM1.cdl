@@ -3,7 +3,7 @@
  *
  */
 import("EV3_common.cdl");
-import("composite.cdl");
+import("tTLSFStatistics.cdl");
 
 //[domain(HRP2, "trusted")]
 //[domain(HRP2, "nontrusted")]
@@ -27,7 +27,7 @@ region rDomainEV3 {
 			"$(APP_RB)";
 		cInit = VM_TECSInitializer.eInitialize;
 		// cMalloc = TLSFMalloc1.eMalloc;
-		cMalloc = TLSFMallocStatistics.eMalloc;
+		cMalloc = TLSFMallocStatistics1.eMalloc;
 	};
 
 	cell nMruby::tMrubyTaskBody MrubyTaskBody {
@@ -44,8 +44,7 @@ region rDomainEV3 {
 		//userStackSize = C_EXP("STACK_SIZE");
 	};
 
-    cell tTLSFMallocStatistics TLSFMallocStatistics {
-
+    cell tTLSFMallocStatistics TLSFMallocStatistics1 {
     };
 
 };
