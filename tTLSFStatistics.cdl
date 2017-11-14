@@ -5,10 +5,9 @@ celltype tTLSFStatistics {
 	require tKernel.eKernel;
 	call 	sMalloc 			cMalloc;
 	call 	sMallocStatistics 	cMallocStatistics;
+	entry 	sTaskBody 		eBody;
 	[inline]
 		entry 	sMalloc 		eMalloc;
-	[inline]
-		entry 	siHandlerBody 	eiBody;
 
 	attr {
 		size_t 	maxSize = 1000000;
@@ -34,10 +33,16 @@ composite tTLSFMallocStatistics {
 	entry sMalloc eMalloc;
 
 	attr {
-		ATR 	attribute 		= C_EXP("TA_STA");
+		size_t 	memoryPoolSize 	= 1024 * 1024;
+		/*
+		 *  TA_NULL     0x00U   デフォルト値
+		 * 	TA_STA 		0x01U   周期ハンドラが動作している状態
+		 */
+		ATR 	cyclicAttribute = C_EXP("TA_STA");
 		RELTIM 	cyclicTime	 	= 1;
 		RELTIM 	cyclicPhase 	= 1;
-		size_t 	memoryPoolSize 	= 1024 * 1024;
+		PRI		priority		= C_EXP("EV3_MRUBY_VM_PRIORITY-1");
+		SIZE	stackSize 		= C_EXP("STACK_SIZE");
 	};
 
 	cell tTLSFStatistics TLSFStatistics {
@@ -45,11 +50,13 @@ composite tTLSFMallocStatistics {
 		cMallocStatistics = TLSFMalloc.eMallocStatistics;
 	};
 
-	cell tCyclicHandler CyclicHandler {
-		ciBody 		= TLSFStatistics.eiBody;
-		attribute 	= composite.attribute;
-        cyclicTime 	= composite.cyclicTime;
-        cyclicPhase = composite.cyclicPhase;
+	cell tCyclicTask CyclicTask {
+		cBody 			= TLSFStatistics.eBody;
+		cyclicAttribute = composite.cyclicAttribute;
+        cyclicTime 		= composite.cyclicTime;
+        cyclicPhase 	= composite.cyclicPhase;
+        priority 		= composite.priority;
+		stackSize		= composite.stackSize;
 	};
 
 	cell tTLSFMalloc TLSFMalloc {

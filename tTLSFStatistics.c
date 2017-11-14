@@ -1,11 +1,8 @@
-#ifndef tTLSFStatistics__INLINE_H
-#define tTLSFStatistics__INLINE_H
-
 /*
  * このファイルは tecsgen によりテンプレートとして自動生成されました
  * このファイルを編集して使用することが意図されていますが
  * tecsgen の再実行により上書きされてしまうため、通常
- *   gen/tTLSFStatistics_inline_template.h => src/tTLSFStatistics_inline.h
+ *   gen/tTLSFStatistics_template.c => src/tTLSFStatistics.c
  * のように名前, フォルダを変更してから修正します
  */
 /* #[<PREAMBLE>]#
@@ -60,22 +57,29 @@
  *   size_t         cMallocStatistics_getReallocSize( );
  *
  * #[</PREAMBLE>]# */
-#include <t_syslog.h>
-#include <stdio.h>
+
+/* プロトタイプ宣言や変数の定義をここに書きます #_PAC_# */
+#include "tTLSFStatistics_tecsgen.h"
+
+#ifndef E_OK
+#define	E_OK	0		/* success */
+#define	E_ID	(-18)	/* illegal ID */
+#endif
+
 /* 受け口関数 #_TEPF_# */
-/* #[<ENTRY_PORT>]# eMalloc
- * entry port: eMalloc
- * signature:  sMalloc
+/* #[<ENTRY_PORT>]# eBody
+ * entry port: eBody
+ * signature:  sTaskBody
  * context:    task
  * #[</ENTRY_PORT>]# */
 
-/* #[<ENTRY_FUNC>]# eMalloc_initializeMemoryPool
- * name:         eMalloc_initializeMemoryPool
- * global_name:  tTLSFStatistics_eMalloc_initializeMemoryPool
+/* #[<ENTRY_FUNC>]# eBody_main
+ * name:         eBody_main
+ * global_name:  tTLSFStatistics_eBody_main
  * oneway:       false
  * #[</ENTRY_FUNC>]# */
-Inline int
-eMalloc_initializeMemoryPool(CELLIDX idx)
+void
+eBody_main(CELLIDX idx)
 {
 	CELLCB	*p_cellcb;
 	if (VALID_IDX(idx)) {
@@ -86,100 +90,14 @@ eMalloc_initializeMemoryPool(CELLIDX idx)
 	} /* end if VALID_IDX(idx) */
 
 	/* ここに処理本体を記述します #_TEFB_# */
-	VAR_mallocNum = 0;
-	VAR_reallocNum = 0;
-	VAR_freeNum = 0;
- 	return cMalloc_initializeMemoryPool();
-}
-
-/* #[<ENTRY_FUNC>]# eMalloc_calloc
- * name:         eMalloc_calloc
- * global_name:  tTLSFStatistics_eMalloc_calloc
- * oneway:       false
- * #[</ENTRY_FUNC>]# */
-Inline void*
-eMalloc_calloc(CELLIDX idx, size_t nelem, size_t elem_size)
-{
-	CELLCB	*p_cellcb;
-	if (VALID_IDX(idx)) {
-		p_cellcb = GET_CELLCB(idx);
-	}
-	else {
-		/* エラー処理コードをここに記述します */
-	} /* end if VALID_IDX(idx) */
-
-	/* ここに処理本体を記述します #_TEFB_# */
-	return cMalloc_calloc(nelem, elem_size);
-}
-
-/* #[<ENTRY_FUNC>]# eMalloc_malloc
- * name:         eMalloc_malloc
- * global_name:  tTLSFStatistics_eMalloc_malloc
- * oneway:       false
- * #[</ENTRY_FUNC>]# */
-Inline void*
-eMalloc_malloc(CELLIDX idx, size_t size)
-{
-	CELLCB	*p_cellcb;
-	if (VALID_IDX(idx)) {
-		p_cellcb = GET_CELLCB(idx);
-	}
-	else {
-		/* エラー処理コードをここに記述します */
-	} /* end if VALID_IDX(idx) */
-
-	/* ここに処理本体を記述します #_TEFB_# */
-	VAR_mallocNum++;
-	return cMalloc_malloc(size);
-
-}
-
-/* #[<ENTRY_FUNC>]# eMalloc_realloc
- * name:         eMalloc_realloc
- * global_name:  tTLSFStatistics_eMalloc_realloc
- * oneway:       false
- * #[</ENTRY_FUNC>]# */
-Inline void*
-eMalloc_realloc(CELLIDX idx, const void* ptr, size_t new_size)
-{
-	CELLCB	*p_cellcb;
-	if (VALID_IDX(idx)) {
-		p_cellcb = GET_CELLCB(idx);
-	}
-	else {
-		/* エラー処理コードをここに記述します */
-	} /* end if VALID_IDX(idx) */
-
-	/* ここに処理本体を記述します #_TEFB_# */
-	VAR_reallocNum++;
-	return cMalloc_realloc((void *)ptr, new_size);
-
-}
-
-/* #[<ENTRY_FUNC>]# eMalloc_free
- * name:         eMalloc_free
- * global_name:  tTLSFStatistics_eMalloc_free
- * oneway:       false
- * #[</ENTRY_FUNC>]# */
-Inline void
-eMalloc_free(CELLIDX idx, const void* ptr)
-{
-	CELLCB	*p_cellcb;
-	if (VALID_IDX(idx)) {
-		p_cellcb = GET_CELLCB(idx);
-	}
-	else {
-		/* エラー処理コードをここに記述します */
-	} /* end if VALID_IDX(idx) */
-
-	/* ここに処理本体を記述します #_TEFB_# */
-	VAR_freeNum++;
-	return cMalloc_free((void *)ptr);
-
+	syslog(LOG_NOTICE, "[malloc]: malloc size = %d, malloc number = %d",
+								cMallocStatistics_getMallocSize(), VAR_mallocNum);
+	syslog(LOG_NOTICE, "[malloc]: realloc size = %d, realloc number = %d",
+								cMallocStatistics_getReallocSize(), VAR_reallocNum);
+	syslog(LOG_NOTICE, "[malloc]: free size = %d, free number = %d",
+								cMallocStatistics_getFreeSize(), VAR_freeNum);
 }
 
 /* #[<POSTAMBLE>]#
  *   これより下に非受け口関数を書きます
  * #[</POSTAMBLE>]#*/
-
-#endif /* tTLSFStatistics_INLINEH */
