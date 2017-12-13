@@ -4,10 +4,10 @@
 #include "tlsf.h"
 
 /* #[<PREAMBLE>]#
- * #[<...>]# ã‹ã‚‰ #[</...>]# ã§å›²ã¾ã‚ŒãŸã‚³ãƒ¡ãƒ³ãƒˆã¯ç·¨é›†ã—ãªã„ã§ãã ã•ã„
- * tecsmerge ã«ã‚ˆã‚‹ãƒãƒ¼ã‚¸ã«ä½¿ç”¨ã•ã‚Œã¾ã™
+ * #[<...>]# ¤«¤é #[</...>]# ¤Ç°Ï¤Ş¤ì¤¿¥³¥á¥ó¥È¤ÏÊÔ½¸¤·¤Ê¤¤¤Ç¤¯¤À¤µ¤¤
+ * tecsmerge ¤Ë¤è¤ë¥Ş¡¼¥¸¤Ë»ÈÍÑ¤µ¤ì¤Ş¤¹
  *
- * å±æ€§ã‚¢ã‚¯ã‚»ã‚¹ãƒã‚¯ãƒ­ #_CAAM_#
+ * Â°À­¥¢¥¯¥»¥¹¥Ş¥¯¥í #_CAAM_#
  * memoryPoolSize   size_t           ATTR_memoryPoolSize
  * pool             uint64_t*        VAR_pool        
  *
@@ -110,8 +110,50 @@ eMalloc_free(CELLIDX idx, const void* ptr)
   return free_ex((void *)ptr, VAR_pool);
 }
 
+/* #[<ENTRY_PORT>]# eMallocStatistics
+ * entry port: eMallocStatistics
+ * signature:  sMallocStatistics
+ * context:    task
+ * #[</ENTRY_PORT>]# */
+
+/* #[<ENTRY_FUNC>]# eMallocStatistics_getUsedSize
+ * name:         eMallocStatistics_getUsedSize
+ * global_name:  tTLSFMalloc_eMallocStatistics_getUsedSize
+ * oneway:       false
+ * #[</ENTRY_FUNC>]# */
+Inline size_t
+eMallocStatistics_getUsedSize(CELLIDX idx)
+{
+	CELLCB	*p_cellcb;
+	if (VALID_IDX(idx)) {
+		p_cellcb = GET_CELLCB(idx);
+	}
+	else {
+	} /* end if VALID_IDX(idx) */
+
+	return get_used_size(VAR_pool);
+}
+
+/* #[<ENTRY_FUNC>]# eMallocStatistics_getMaxSize
+ * name:         eMallocStatistics_getMaxSize
+ * global_name:  tTLSFMalloc_eMallocStatistics_getMaxSize
+ * oneway:       false
+ * #[</ENTRY_FUNC>]# */
+Inline size_t
+eMallocStatistics_getMaxSize(CELLIDX idx)
+{
+	CELLCB	*p_cellcb;
+	if (VALID_IDX(idx)) {
+		p_cellcb = GET_CELLCB(idx);
+	}
+	else {
+	} /* end if VALID_IDX(idx) */
+
+	return get_max_size(VAR_pool);
+}
+
 /* #[<POSTAMBLE>]#
- *   ã“ã‚Œã‚ˆã‚Šä¸‹ã«éå—ã‘å£é–¢æ•°ã‚’æ›¸ãã¾ã™
+ *   ¤³¤ì¤è¤ê²¼¤ËÈó¼õ¤±¸ı´Ø¿ô¤ò½ñ¤­¤Ş¤¹
  * #[</POSTAMBLE>]#*/
 
 #endif /* tTLSFMalloc_INLINEH */
