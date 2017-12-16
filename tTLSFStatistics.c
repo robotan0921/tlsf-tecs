@@ -33,6 +33,12 @@
  *   bool_t         senseDispatch( );
  *   bool_t         senseDispatchPendingState( );
  *   bool_t         senseKernel( );
+ * call port: cMalloc signature: sMalloc context:task
+ *   int            cMalloc_initializeMemoryPool( );
+ *   void*          cMalloc_calloc( size_t nelem, size_t elem_size );
+ *   void*          cMalloc_malloc( size_t size );
+ *   void*          cMalloc_realloc( const void* ptr, size_t new_size );
+ *   void           cMalloc_free( const void* ptr );
  * call port: cMallocStatistics signature: sMallocStatistics context:task
  *   size_t         cMallocStatistics_getUsedSize( );
  *   size_t         cMallocStatistics_getMaxSize( );
@@ -50,6 +56,7 @@
 #include <t_syslog.h>
 
 bool_t flag = false;
+SYSTIM start_time = 0;
 
 /* 受け口関数 #_TEPF_# */
 /* #[<ENTRY_PORT>]# eBody
@@ -73,13 +80,15 @@ eBody_main(CELLIDX idx)
 	else {
 	} /* end if VALID_IDX(idx) */
 
-    SYSTIM start, now;
     if (flag = false) {
     	flag = true;
-    	getTime(&start);
+    	getTime(&start_time);
     }
-	getTime(&now);
-	syslog(LOG_EMERG, "[Debug]: %d ms : %d bytes", now - start, cMallocStatistics_getUsedSize());
+#ifndef SEQUENTIAL
+    SYSTIM now_time;
+	getTime(&now_time);
+	syslog(LOG_EMERG, "[TLSF]: %d ms || %d bytes", now_time - start_time, cMallocStatistics_getUsedSize());
+#endif
 }
 
 /* #[<POSTAMBLE>]#

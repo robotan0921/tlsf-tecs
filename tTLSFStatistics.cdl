@@ -3,6 +3,9 @@ import( <sMallocStatistics.cdl> );
 
 celltype tTLSFStatistics {
 	require tKernel.eKernel;
+	call 	sMalloc 			cMalloc;
 	call 	sMallocStatistics 	cMallocStatistics;
-	entry 	sTaskBody 		eBody;
+	[inline]
+		entry 	sMalloc 		eMalloc;
+	entry 	sTaskBody 			eBody;
 };

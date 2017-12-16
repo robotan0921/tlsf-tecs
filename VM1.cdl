@@ -25,8 +25,8 @@ region rDomainEV3 {
 			"$(MRUBY_LIB_DIR)/SharedMemory.rb "
 			"$(APP_RB)";
 		cInit = VM_TECSInitializer.eInitialize;
-		cMalloc = TLSFMalloc1.eMalloc;
-		// cMalloc = TLSFStatics.eMalloc;
+		// cMalloc = TLSFMalloc1.eMalloc;
+		cMalloc = TLSFStatistics.eMalloc;
 	};
 
 	cell nMruby::tMrubyTaskBody MrubyTaskBody {
@@ -52,6 +52,7 @@ import("tTLSFStatistics.cdl");
 
 region rDomainEV3 {
 	cell tTLSFStatistics TLSFStatistics {
+		cMalloc 		  = TLSFMalloc1.eMalloc;
 		cMallocStatistics = TLSFMalloc1.eMallocStatistics;
 	};
 
@@ -62,7 +63,7 @@ region rDomainEV3 {
 		 * 	TA_STA 		0x01U   周期ハンドラが動作している状態
 		 */
 		cyclicAttribute = C_EXP("TA_STA");
-		cyclicTime 		= 400;
+		cyclicTime 		= 4;
 		cyclicPhase 	= 0;
 		/*
 		 * タスク例外処理ルーチンに指定できる属性はないため
