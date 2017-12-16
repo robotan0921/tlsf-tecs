@@ -80,7 +80,7 @@ eBody_main(CELLIDX idx)
 	else {
 	} /* end if VALID_IDX(idx) */
 
-    if (flag = false) {
+    if (flag == false) {
     	flag = true;
     	getTime(&start_time);
     }
