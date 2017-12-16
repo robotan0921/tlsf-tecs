@@ -85,11 +85,14 @@ APP_NAME = button_sample.rb
 
 APP_RB = $(MRUBY_DIR)/$(APP_NAME)
 
+<<<<<<< HEAD
 # APP_NAME1 = sharedmemory_sample.rb
 # APP_NAME2 = sharedmemory_sample2.rb
 
 # APP_RB = $(MRUBY_DIR)/$(APP_NAME1)
 # APP_RB2 = $(MRUBY_DIR)/$(APP_NAME2)
+=======
+>>>>>>> feature-statistics
 
 #
 #  プログラミング言語の定義

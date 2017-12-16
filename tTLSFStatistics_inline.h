@@ -1,6 +1,7 @@
 #ifndef tTLSFStatistics__INLINE_H
 #define tTLSFStatistics__INLINE_H
 
+<<<<<<< HEAD
 /*
  * ¤³¤Î¥Õ¥¡¥¤¥ë¤Ï tecsgen ¤Ë¤è¤ê¥Æ¥ó¥×¥ì¡¼¥È¤È¤·¤Æ¼«Æ°À¸À®¤µ¤ì¤Ş¤·¤¿
  * ¤³¤Î¥Õ¥¡¥¤¥ë¤òÊÔ½¸¤·¤Æ»ÈÍÑ¤¹¤ë¤³¤È¤¬°Õ¿Ş¤µ¤ì¤Æ¤¤¤Ş¤¹¤¬
@@ -22,6 +23,22 @@
  * freeNum          int32_t          VAR_freeNum     
  *
  * ¸Æ¤Ó¸ı´Ø¿ô #_TCPF_#
+=======
+#include "t_syslog.h"
+
+/*
+ * Â¤Â³Â¤ÃÂ¥Ã•Â¥Â¡Â¥Â¤Â¥Ã«Â¤Ã tecsgen Â¤Ã‹Â¤Ã¨Â¤ÃªÂ¥Ã†Â¥Ã³Â¥Ã—Â¥Ã¬Â¡Â¼Â¥ÃˆÂ¤ÃˆÂ¤Â·Â¤Ã†Â¼Â«Ã†Â°Ã€Â¸Ã€Â®Â¤ÂµÂ¤Ã¬Â¤ÃÂ¤Â·Â¤Â¿
+ * Â¤Â³Â¤ÃÂ¥Ã•Â¥Â¡Â¥Â¤Â¥Ã«Â¤Ã²ÃŠÃ”Â½Â¸Â¤Â·Â¤Ã†Â»ÃˆÃÃ‘Â¤Â¹Â¤Ã«Â¤Â³Â¤ÃˆÂ¤Â¬Â°Ã•Â¿ÃÂ¤ÂµÂ¤Ã¬Â¤Ã†Â¤Â¤Â¤ÃÂ¤Â¹Â¤Â¬
+ * tecsgen Â¤ÃÂºÃ†Â¼Ã‚Â¹Ã”Â¤Ã‹Â¤Ã¨Â¤ÃªÂ¾Ã¥Â½Ã±Â¤Â­Â¤ÂµÂ¤Ã¬Â¤Ã†Â¤Â·Â¤ÃÂ¤Â¦Â¤Â¿Â¤Ã¡Â¡Â¢Ã„ÃŒÂ¾Ã¯
+ *   gen/tTLSFStatistics_inline_template.h => src/tTLSFStatistics_inline.h
+ * Â¤ÃÂ¤Ã¨Â¤Â¦Â¤Ã‹ÃŒÂ¾ÃÂ°, Â¥Ã•Â¥Â©Â¥Ã«Â¥Ã€Â¤Ã²ÃŠÃ‘Â¹Â¹Â¤Â·Â¤Ã†Â¤Â«Â¤Ã©Â½Â¤Ã€ÂµÂ¤Â·Â¤ÃÂ¤Â¹
+ */
+/* #[<PREAMBLE>]#
+ * #[<...>]# Â¤Â«Â¤Ã© #[</...>]# Â¤Ã‡Â°ÃÂ¤ÃÂ¤Ã¬Â¤Â¿Â¥Â³Â¥Ã¡Â¥Ã³Â¥ÃˆÂ¤ÃÃŠÃ”Â½Â¸Â¤Â·Â¤ÃŠÂ¤Â¤Â¤Ã‡Â¤Â¯Â¤Ã€Â¤ÂµÂ¤Â¤
+ * tecsmerge Â¤Ã‹Â¤Ã¨Â¤Ã«Â¥ÃÂ¡Â¼Â¥Â¸Â¤Ã‹Â»ÃˆÃÃ‘Â¤ÂµÂ¤Ã¬Â¤ÃÂ¤Â¹
+ *
+ * Â¸Ã†Â¤Ã“Â¸Ã½Â´Ã˜Â¿Ã´ #_TCPF_#
+>>>>>>> feature-statistics
  * require port: signature:sKernel context:task
  *   ER             sleep( );
  *   ER             sleepTimeout( TMO timeout );
@@ -52,6 +69,7 @@
  *   void*          cMalloc_realloc( const void* ptr, size_t new_size );
  *   void           cMalloc_free( const void* ptr );
  * call port: cMallocStatistics signature: sMallocStatistics context:task
+<<<<<<< HEAD
  *   size_t         cMallocStatistics_getMaxSize( );
  *   size_t         cMallocStatistics_getUsableSize( );
  *   size_t         cMallocStatistics_getUsedSize( );
@@ -63,6 +81,18 @@
 #include <t_syslog.h>
 #include <stdio.h>
 /* ¼õ¤±¸ı´Ø¿ô #_TEPF_# */
+=======
+ *   size_t         cMallocStatistics_getUsedSize( );
+ *   size_t         cMallocStatistics_getMaxSize( );
+ *
+ * #[</PREAMBLE>]# */
+
+#ifdef SEQUENTIAL
+extern SYSTIM start_time;
+#endif
+
+/* Â¼ÃµÂ¤Â±Â¸Ã½Â´Ã˜Â¿Ã´ #_TEPF_# */
+>>>>>>> feature-statistics
 /* #[<ENTRY_PORT>]# eMalloc
  * entry port: eMalloc
  * signature:  sMalloc
@@ -82,6 +112,7 @@ eMalloc_initializeMemoryPool(CELLIDX idx)
 		p_cellcb = GET_CELLCB(idx);
 	}
 	else {
+<<<<<<< HEAD
 		/* ¥¨¥é¡¼½èÍı¥³¡¼¥É¤ò¤³¤³¤Ëµ­½Ò¤·¤Ş¤¹ */
 	} /* end if VALID_IDX(idx) */
 
@@ -90,6 +121,11 @@ eMalloc_initializeMemoryPool(CELLIDX idx)
 	VAR_reallocNum = 0;
 	VAR_freeNum = 0;
  	return cMalloc_initializeMemoryPool();
+=======
+	} /* end if VALID_IDX(idx) */
+
+  	return cMalloc_initializeMemoryPool();
+>>>>>>> feature-statistics
 }
 
 /* #[<ENTRY_FUNC>]# eMalloc_calloc
@@ -105,11 +141,27 @@ eMalloc_calloc(CELLIDX idx, size_t nelem, size_t elem_size)
 		p_cellcb = GET_CELLCB(idx);
 	}
 	else {
+<<<<<<< HEAD
 		/* ¥¨¥é¡¼½èÍı¥³¡¼¥É¤ò¤³¤³¤Ëµ­½Ò¤·¤Ş¤¹ */
 	} /* end if VALID_IDX(idx) */
 
 	/* ¤³¤³¤Ë½èÍıËÜÂÎ¤òµ­½Ò¤·¤Ş¤¹ #_TEFB_# */
 	return cMalloc_calloc(nelem, elem_size);
+=======
+	} /* end if VALID_IDX(idx) */
+
+    void *ret;
+#ifdef SEQUENTIAL
+	SYSTIM now_time;
+	getTime(&now_time);
+#endif
+    ret = cMalloc_calloc(nelem, elem_size);
+#ifdef SEQUENTIAL
+    syslog(LOG_EMERG, "[TLSF] %d ms || calloc: %d bytes, total: %d bytes",
+    		now_time - start_time, nelem * elem_size, cMallocStatistics_getUsedSize());
+#endif
+    return ret;
+>>>>>>> feature-statistics
 }
 
 /* #[<ENTRY_FUNC>]# eMalloc_malloc
@@ -125,6 +177,7 @@ eMalloc_malloc(CELLIDX idx, size_t size)
 		p_cellcb = GET_CELLCB(idx);
 	}
 	else {
+<<<<<<< HEAD
 		/* ¥¨¥é¡¼½èÍı¥³¡¼¥É¤ò¤³¤³¤Ëµ­½Ò¤·¤Ş¤¹ */
 	} /* end if VALID_IDX(idx) */
 
@@ -132,6 +185,21 @@ eMalloc_malloc(CELLIDX idx, size_t size)
 	VAR_mallocNum++;
 	return cMalloc_malloc(size);
 
+=======
+	} /* end if VALID_IDX(idx) */
+
+	void *ret;
+#ifdef SEQUENTIAL
+	SYSTIM now_time;
+	getTime(&now_time);
+#endif
+	ret = cMalloc_malloc(size);
+#ifdef SEQUENTIAL
+	syslog(LOG_EMERG, "[TLSF] %d ms || malloc: %d bytes, total: %d bytes",
+			now_time - start_time, size, cMallocStatistics_getUsedSize());
+#endif
+    return ret;
+>>>>>>> feature-statistics
 }
 
 /* #[<ENTRY_FUNC>]# eMalloc_realloc
@@ -147,6 +215,7 @@ eMalloc_realloc(CELLIDX idx, const void* ptr, size_t new_size)
 		p_cellcb = GET_CELLCB(idx);
 	}
 	else {
+<<<<<<< HEAD
 		/* ¥¨¥é¡¼½èÍı¥³¡¼¥É¤ò¤³¤³¤Ëµ­½Ò¤·¤Ş¤¹ */
 	} /* end if VALID_IDX(idx) */
 
@@ -154,6 +223,21 @@ eMalloc_realloc(CELLIDX idx, const void* ptr, size_t new_size)
 	VAR_reallocNum++;
 	return cMalloc_realloc((void *)ptr, new_size);
 
+=======
+	} /* end if VALID_IDX(idx) */
+
+	void *ret;
+#ifdef SEQUENTIAL
+	SYSTIM now_time;
+	getTime(&now_time);
+#endif
+	ret = cMalloc_realloc(ptr, new_size);
+#ifdef SEQUENTIAL
+	syslog(LOG_EMERG, "[TLSF] %d ms || realloc: %d bytes, total: %d bytes",
+			now_time - start_time, new_size, cMallocStatistics_getUsedSize());
+#endif
+    return ret;
+>>>>>>> feature-statistics
 }
 
 /* #[<ENTRY_FUNC>]# eMalloc_free
@@ -169,6 +253,7 @@ eMalloc_free(CELLIDX idx, const void* ptr)
 		p_cellcb = GET_CELLCB(idx);
 	}
 	else {
+<<<<<<< HEAD
 		/* ¥¨¥é¡¼½èÍı¥³¡¼¥É¤ò¤³¤³¤Ëµ­½Ò¤·¤Ş¤¹ */
 	} /* end if VALID_IDX(idx) */
 
@@ -180,6 +265,24 @@ eMalloc_free(CELLIDX idx, const void* ptr)
 
 /* #[<POSTAMBLE>]#
  *   ¤³¤ì¤è¤ê²¼¤ËÈó¼õ¤±¸ı´Ø¿ô¤ò½ñ¤­¤Ş¤¹
+=======
+	} /* end if VALID_IDX(idx) */
+
+#ifdef SEQUENTIAL
+	SYSTIM now_time;
+	getTime(&now_time);
+#endif
+	cMalloc_free(ptr);
+#ifdef SEQUENTIAL
+    syslog(LOG_EMERG, "[TLSF] %d ms || free:  , total: %d bytes",
+    		now_time - start_time, cMallocStatistics_getUsedSize());
+#endif
+    return;
+}
+
+/* #[<POSTAMBLE>]#
+ *   Â¤Â³Â¤Ã¬Â¤Ã¨Â¤ÃªÂ²Â¼Â¤Ã‹ÃˆÃ³Â¼ÃµÂ¤Â±Â¸Ã½Â´Ã˜Â¿Ã´Â¤Ã²Â½Ã±Â¤Â­Â¤ÃÂ¤Â¹
+>>>>>>> feature-statistics
  * #[</POSTAMBLE>]#*/
 
 #endif /* tTLSFStatistics_INLINEH */

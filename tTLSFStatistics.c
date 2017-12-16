@@ -9,6 +9,7 @@
  * #[<...>]# から #[</...>]# で囲まれたコメントは編集しないでください
  * tecsmerge によるマージに使用されます
  *
+<<<<<<< HEAD
  * 属性アクセスマクロ #_CAAM_#
  * maxSize          size_t           ATTR_maxSize    
  * time             int32_t*         VAR_time        
@@ -18,6 +19,8 @@
  * reallocNum       int32_t          VAR_reallocNum  
  * freeNum          int32_t          VAR_freeNum     
  *
+=======
+>>>>>>> feature-statistics
  * 呼び口関数 #_TCPF_#
  * require port: signature:sKernel context:task
  *   ER             sleep( );
@@ -49,12 +52,17 @@
  *   void*          cMalloc_realloc( const void* ptr, size_t new_size );
  *   void           cMalloc_free( const void* ptr );
  * call port: cMallocStatistics signature: sMallocStatistics context:task
+<<<<<<< HEAD
  *   size_t         cMallocStatistics_getMaxSize( );
  *   size_t         cMallocStatistics_getUsableSize( );
  *   size_t         cMallocStatistics_getUsedSize( );
  *   size_t         cMallocStatistics_getMallocSize( );
  *   size_t         cMallocStatistics_getFreeSize( );
  *   size_t         cMallocStatistics_getReallocSize( );
+=======
+ *   size_t         cMallocStatistics_getUsedSize( );
+ *   size_t         cMallocStatistics_getMaxSize( );
+>>>>>>> feature-statistics
  *
  * #[</PREAMBLE>]# */
 
@@ -66,6 +74,14 @@
 #define	E_ID	(-18)	/* illegal ID */
 #endif
 
+<<<<<<< HEAD
+=======
+#include <t_syslog.h>
+
+bool_t flag = false;
+SYSTIM start_time = 0;
+
+>>>>>>> feature-statistics
 /* 受け口関数 #_TEPF_# */
 /* #[<ENTRY_PORT>]# eBody
  * entry port: eBody
@@ -86,6 +102,7 @@ eBody_main(CELLIDX idx)
 		p_cellcb = GET_CELLCB(idx);
 	}
 	else {
+<<<<<<< HEAD
 		/* エラー処理コードをここに記述します */
 	} /* end if VALID_IDX(idx) */
 
@@ -96,6 +113,19 @@ eBody_main(CELLIDX idx)
 								cMallocStatistics_getReallocSize(), VAR_reallocNum);
 	syslog(LOG_NOTICE, "[malloc]: free size = %d, free number = %d",
 								cMallocStatistics_getFreeSize(), VAR_freeNum);
+=======
+	} /* end if VALID_IDX(idx) */
+
+    if (flag == false) {
+    	flag = true;
+    	getTime(&start_time);
+    }
+#ifndef SEQUENTIAL
+    SYSTIM now_time;
+	getTime(&now_time);
+	syslog(LOG_EMERG, "[TLSF]: %d ms || %d bytes", now_time - start_time, cMallocStatistics_getUsedSize());
+#endif
+>>>>>>> feature-statistics
 }
 
 /* #[<POSTAMBLE>]#

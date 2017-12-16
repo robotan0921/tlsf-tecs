@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import( <sMalloc.cdl> );
 import( <sMallocStatistics.cdl> );
 
@@ -64,4 +65,72 @@ composite tTLSFMallocStatistics {
     };
 
 	composite.eMalloc => TLSFStatistics.eMalloc;
+=======
+import( <sMalloc.cdl> );
+import( <sMallocStatistics.cdl> );
+
+celltype tTLSFStatistics {
+	require tKernel.eKernel;
+	call 	sMalloc 			cMalloc;
+	call 	sMallocStatistics 	cMallocStatistics;
+	[inline]
+		entry 	sMalloc 		eMalloc;
+	entry 	sTaskBody 			eBody;
+};
+
+/**
+*	統計情報を取得するコンポーネントを加えた
+*	TLSFコンポーネント
+*/
+[active]
+composite tTLSFMallocStatistics {
+	entry sMalloc eMalloc;
+
+	attr {
+		size_t 	memoryPoolSize 	= 1024 * 1024;
+		/*
+		 *  TA_NULL     0x00U   デフォルト値
+		 * 	TA_STA 		0x01U   周期ハンドラが動作している状態
+		 */
+		ATR 	cyclicAttribute = C_EXP("TA_STA");
+		RELTIM 	cyclicTime	 	= 4;
+		RELTIM 	cyclicPhase 	= 0;
+		/*
+		 * タスク例外処理ルーチンに指定できる属性はないため
+		 * TA_NULLを指定する
+		 */
+		ATR		exceptionAttribute 	= C_EXP("TA_NULL");
+		PRI		priority 			= C_EXP("EV3_MRUBY_VM_PRIORITY - 1");
+		SIZE	stackSize 			= C_EXP("STACK_SIZE");
+	};
+
+	cell tTLSFStatistics TLSFStatistics {
+		cMalloc 		  = TLSFMalloc.eMalloc;
+		cMallocStatistics = TLSFMalloc.eMallocStatistics;
+	};
+
+	cell tCyclicTask CyclicTask {
+		cBody = TLSFStatistics.eBody;
+        /*
+		 *  TA_NULL     0x00U   デフォルト値
+		 * 	TA_STA 		0x01U   周期ハンドラが動作している状態
+		 */
+		cyclicAttribute = composite.cyclicAttribute;
+		cyclicTime 		= composite.cyclicTime;
+		cyclicPhase 	= composite.cyclicPhase;
+		/*
+		 * タスク例外処理ルーチンに指定できる属性はないため
+		 * TA_NULLを指定する
+		 */
+		exceptionAttribute 	= composite.exceptionAttribute;
+		priority 			= composite.priority;
+		stackSize 			= composite.stackSize;
+	};
+
+	cell tTLSFMalloc TLSFMalloc {
+    	memoryPoolSize = composite.memoryPoolSize;
+    };
+
+	composite.eMalloc => TLSFStatistics.eMalloc;
+>>>>>>> feature-statistics
 };
