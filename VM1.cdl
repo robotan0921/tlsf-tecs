@@ -3,6 +3,7 @@
  *
  */
 import("EV3_common.cdl");
+import("tTLSFStatistics.cdl");
 
 //[domain(HRP2, "trusted")]
 //[domain(HRP2, "nontrusted")]
@@ -26,7 +27,7 @@ region rDomainEV3 {
 			"$(APP_RB)";
 		cInit = VM_TECSInitializer.eInitialize;
 		// cMalloc = TLSFMalloc1.eMalloc;
-		cMalloc = TLSFStatistics.eMalloc;
+		cMalloc = TLSFMallocStatistics1.eMalloc;
 	};
 
 	cell nMruby::tMrubyTaskBody MrubyTaskBody {
@@ -43,34 +44,10 @@ region rDomainEV3 {
 		//userStackSize = C_EXP("STACK_SIZE");
 	};
 
-	cell tTLSFMalloc TLSFMalloc1 {
+	// cell tTLSFMalloc TLSFMalloc1 {
+ //    	memoryPoolSize = 1024 * 1024;
+ //    };
+	cell tTLSFMallocStatistics TLSFMallocStatistics1 {
     	memoryPoolSize = 1024 * 1024;
     };
-};
-
-import("tTLSFStatistics.cdl");
-
-region rDomainEV3 {
-	cell tTLSFStatistics TLSFStatistics {
-		cMalloc 		  = TLSFMalloc1.eMalloc;
-		cMallocStatistics = TLSFMalloc1.eMallocStatistics;
-	};
-
-	cell tCyclicTask CyclicTask {
-		cBody = TLSFStatistics.eBody;
-        /*
-		 *  TA_NULL     0x00U   デフォルト値
-		 * 	TA_STA 		0x01U   周期ハンドラが動作している状態
-		 */
-		cyclicAttribute = C_EXP("TA_STA");
-		cyclicTime 		= 4;
-		cyclicPhase 	= 0;
-		/*
-		 * タスク例外処理ルーチンに指定できる属性はないため
-		 * TA_NULLを指定する
-		 */
-		exceptionAttribute 	= C_EXP("TA_NULL");
-		priority 			= C_EXP("EV3_MRUBY_VM_PRIORITY - 1");
-		stackSize 			= C_EXP("STACK_SIZE");
-	};
 };
