@@ -1,6 +1,9 @@
 import( <sMalloc.cdl> );
 import( <sMallocStatistics.cdl> );
 
+// const bool_t SEQUENTIAL = true;
+const bool_t TLSF_USE_SD = true;
+
 celltype tTLSFStatistics {
 	require tKernel.eKernel;
 	call 	sMalloc 			cMalloc;

@@ -87,8 +87,16 @@ eBody_main(CELLIDX idx)
 #ifndef SEQUENTIAL
     SYSTIM now_time;
 	getTime(&now_time);
+#ifdef TLSF_USE_SD
+	// TODO: Fix for ensuring real-time
+	FILE *fp;
+	fp = fopen("/log.csv","a");
+	fprintf(fp,"%d,,%d\n", now_time - start_time, cMallocStatistics_getUsedSize());
+	fclose(fp);
+#else
 	syslog(LOG_EMERG, "[TLSF]: %d ms || %d bytes", now_time - start_time, cMallocStatistics_getUsedSize());
-#endif
+#endif 	/* end of #ifdef TLSF_USE_SD */
+#endif 	/* end of #ifndef SEQUENTIAL */
 }
 
 /* #[<POSTAMBLE>]#
