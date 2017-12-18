@@ -1,18 +1,6 @@
-<<<<<<< HEAD
-
-signature sMallocStatistics {
-	size_t getMaxSize(void);
-	size_t getUsableSize(void);
-	size_t getUsedSize(void);
-	size_t getMallocSize(void);
-	size_t getFreeSize(void);
-	size_t getReallocSize(void);
-};
-=======
 import_C( "t_stddef.h" );
 
 signature sMallocStatistics {
 	size_t getUsedSize(void);
 	size_t getMaxSize(void);
 };
->>>>>>> feature-statistics

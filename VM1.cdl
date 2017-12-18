@@ -44,17 +44,10 @@ region rDomainEV3 {
 		//userStackSize = C_EXP("STACK_SIZE");
 	};
 
-<<<<<<< HEAD
-    cell tTLSFMallocStatistics TLSFMallocStatistics1 {
-    };
-
-};
-=======
 	// cell tTLSFMalloc TLSFMalloc1 {
- //    	memoryPoolSize = 1024 * 1024;
- //    };
+		// memoryPoolSize = 1024 * 1024;
+	// };
 	cell tTLSFMallocStatistics TLSFMallocStatistics1 {
     	memoryPoolSize = 1024 * 1024;
     };
 };
->>>>>>> feature-statistics

@@ -3,15 +3,10 @@ import( <sMallocStatistics.cdl> );
 import( <kernel.cdl> );
 
 celltype tTLSFMalloc {
-<<<<<<< HEAD
-    entry   sMalloc            eMalloc;
-    entry   sMallocStatistics  eMallocStatistics;
-=======
     [inline]
         entry  sMalloc  eMalloc;
     [inline]
         entry  sMallocStatistics    eMallocStatistics;
->>>>>>> feature-statistics
     attr {
         /* memory pool size in bytes */
         size_t  memoryPoolSize;
@@ -19,8 +14,5 @@ celltype tTLSFMalloc {
     var {
         [size_is( memoryPoolSize/ 8 )]
             uint64_t   *pool;
-        size_t mallocSize;
-        size_t freeSize;
-        size_t reallocSize;
     };
 };
