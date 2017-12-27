@@ -1,5 +1,6 @@
 import( <sMalloc.cdl> );
 import( <sMallocStatistics.cdl> );
+import( <sLog.cdl> );
 
 // const bool_t SEQUENTIAL = true;
 const bool_t TLSF_USE_SD = true;
@@ -8,9 +9,23 @@ celltype tTLSFStatistics {
 	require tKernel.eKernel;
 	call 	sMalloc 			cMalloc;
 	call 	sMallocStatistics 	cMallocStatistics;
+	call 	sDataqueue 			cDataqueue;
 	[inline]
 		entry 	sMalloc 		eMalloc;
 	entry 	sTaskBody 			eBody;
+};
+
+celltype tSDTaskBody {
+	call 	sDataqueue 	cDataqueue;
+	entry 	sTaskBody 	eBody;
+
+	attr {
+		char *fileName;
+	};
+
+	var {
+		FILE *fp;
+	};
 };
 
 /**
@@ -23,13 +38,15 @@ composite tTLSFMallocStatistics {
 
 	attr {
 		size_t 	memoryPoolSize 	= 1024 * 1024;
+		char 	*fileName =	"/log.csv";
+		uint_t 	queueSize = 1024 * 1024;
 		/*
 		 *  TA_NULL     0x00U   デフォルト値
 		 * 	TA_STA 		0x01U   周期ハンドラが動作している状態
 		 */
 		ATR 	cyclicAttribute = C_EXP("TA_STA");
 		RELTIM 	cyclicTime	 	= 4;
-		RELTIM 	cyclicPhase 	= 0;
+		RELTIM 	cyclicPhase 	= 1;
 		/*
 		 * タスク例外処理ルーチンに指定できる属性はないため
 		 * TA_NULLを指定する
@@ -42,6 +59,7 @@ composite tTLSFMallocStatistics {
 	cell tTLSFStatistics TLSFStatistics {
 		cMalloc 		  = TLSFMalloc.eMalloc;
 		cMallocStatistics = TLSFMalloc.eMallocStatistics;
+		cDataqueue 		  = Dataqueue.eDataqueue;
 	};
 
 	cell tCyclicTask CyclicTask {
@@ -60,6 +78,33 @@ composite tTLSFMallocStatistics {
 		exceptionAttribute 	= composite.exceptionAttribute;
 		priority 			= composite.priority;
 		stackSize 			= composite.stackSize;
+	};
+
+	cell tDataqueue Dataqueue {
+		count = composite.queueSize;
+	};
+
+	cell tCyclicTask SDTask {
+		cBody = SDTaskBody.eBody;
+		/*
+		 *  TA_NULL     0x00U   デフォルト値
+		 * 	TA_STA 		0x01U   周期ハンドラが動作している状態
+		 */
+		cyclicAttribute = C_EXP("TA_STA");
+		cyclicTime 		= 500;
+		cyclicPhase 	= 500;
+		/*
+		 * タスク例外処理ルーチンに指定できる属性はないため
+		 * TA_NULLを指定する
+		 */
+		exceptionAttribute 	= composite.exceptionAttribute;
+		priority 			= composite.priority;
+		stackSize 			= composite.stackSize;
+	};
+
+	cell tSDTaskBody SDTaskBody {
+		cDataqueue = Dataqueue.eDataqueue;
+		fileName = composite.fileName;
 	};
 
 	cell tTLSFMalloc TLSFMalloc {

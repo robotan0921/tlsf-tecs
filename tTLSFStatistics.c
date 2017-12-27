@@ -42,6 +42,16 @@
  * call port: cMallocStatistics signature: sMallocStatistics context:task
  *   size_t         cMallocStatistics_getUsedSize( );
  *   size_t         cMallocStatistics_getMaxSize( );
+ * call port: cDataqueue signature: sDataqueue context:task
+ *   ER             cDataqueue_send( intptr_t data );
+ *   ER             cDataqueue_sendPolling( intptr_t data );
+ *   ER             cDataqueue_sendTimeout( intptr_t data, TMO timeout );
+ *   ER             cDataqueue_sendForce( intptr_t data );
+ *   ER             cDataqueue_receive( intptr_t* p_data );
+ *   ER             cDataqueue_receivePolling( intptr_t* p_data );
+ *   ER             cDataqueue_receiveTimeout( intptr_t* p_data, TMO timeout );
+ *   ER             cDataqueue_initialize( );
+ *   ER             cDataqueue_refer( T_RDTQ* pk_dataqueueStatus );
  *
  * #[</PREAMBLE>]# */
 
@@ -84,19 +94,18 @@ eBody_main(CELLIDX idx)
     	flag = true;
     	getTime(&start_time);
     }
-#ifndef SEQUENTIAL
+#ifdef SEQUENTIAL
+#else
     SYSTIM now_time;
 	getTime(&now_time);
 #ifdef TLSF_USE_SD
 	// TODO: Fix for ensuring real-time
-	FILE *fp;
-	fp = fopen("/log.csv","a");
-	fprintf(fp,"%d,,%d\n", now_time - start_time, cMallocStatistics_getUsedSize());
-	fclose(fp);
+	cDataqueue_send( now_time - start_time );
+	cDataqueue_send( cMallocStatistics_getUsedSize() );
 #else
 	syslog(LOG_EMERG, "[TLSF]: %d ms || %d bytes", now_time - start_time, cMallocStatistics_getUsedSize());
 #endif 	/* end of #ifdef TLSF_USE_SD */
-#endif 	/* end of #ifndef SEQUENTIAL */
+#endif 	/* end of #ifdef SEQUENTIAL */
 }
 
 /* #[<POSTAMBLE>]#
