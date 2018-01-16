@@ -5,7 +5,7 @@
  *
  *  Copyright (C) 2000-2003 by Embedded and Real-Time Systems Laboratory
  *                              Toyohashi Univ. of Technology, JAPAN
- *  Copyright (C) 2004-2010 by Embedded and Real-Time Systems Laboratory
+ *  Copyright (C) 2004-2016 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *
  *  上記著作権者は，以下の(1)〜(4)の条件を満たす場合に限り，本ソフトウェ
@@ -37,12 +37,14 @@
  *  アの利用により直接的または間接的に生じたいかなる損害に関しても，そ
  *  の責任を負わない．
  *
- *  $Id: tEV3Sample.h 2416 2012-09-07 08:06:20Z ertl-hiro $
+ *  $Id: sample1.h 936 2016-05-02 11:18:27Z coas-nagasima $
  */
 
-#pragma once
+/*
+ *		サンプルプログラム(1)のヘッダファイル
+ */
 
-#include "ev3api.h"
+#include <kernel.h>
 
 /*
  *  ターゲット依存の定義
@@ -53,8 +55,9 @@
  *  各タスクの優先度の定義
  */
 
+#define EXC_PRIORITY	1		/* 例外処理タスクの優先度 */
 #define MAIN_PRIORITY	5		/* メインタスクの優先度 */
-					/* HIGH_PRIORITYより高くすること */
+								/* HIGH_PRIORITYより高くすること */
 
 #define HIGH_PRIORITY	9		/* 並行実行されるタスクの優先度 */
 #define MID_PRIORITY	10
@@ -72,13 +75,29 @@
 #define	STACK_SIZE		4096		/* タスクのスタックサイズ */
 #endif /* STACK_SIZE */
 
+#ifndef KMM_SIZE
+#define	KMM_SIZE		(STACK_SIZE * 16)	/* カーネルが割り付ける   */
+#endif /* KMM_SIZE */						/*     メモリ領域のサイズ */
+
+#ifndef LOOP_REF
+#define LOOP_REF		ULONG_C(1000000)	/* 速度計測用のループ回数 */
+#endif /* LOOP_REF */
+
 /*
  *  関数のプロトタイプ宣言
  */
 #ifndef TOPPERS_MACRO_ONLY
 
-#include <stdio.h>
-
-extern void	zmodem_recv_task(intptr_t exinf);
+extern void	task(intptr_t exinf);
+extern void	main_task(intptr_t exinf);
+extern void exc_task(intptr_t exinf);
+#ifdef INTNO1
+extern void intno1_isr(intptr_t exinf);
+#endif /* INTNO1 */
+#ifdef CPUEXC1
+extern void	cpuexc_handler(void *p_excinf);
+#endif /* CPUEXC1 */
+extern void	cyclic_handler(intptr_t exinf);
+extern void	alarm_handler(intptr_t exinf);
 
 #endif /* TOPPERS_MACRO_ONLY */

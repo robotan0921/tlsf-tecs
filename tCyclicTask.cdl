@@ -1,0 +1,53 @@
+/*
+ * タスクを起こす周期ハンドラの処理の本体
+ */
+celltype tCyclicTaskActivator {
+	entry siHandlerBody eiBody;
+	call  siTask        ciTask;
+};
+
+/*
+ *  周期タスク
+ */
+[active]
+composite tCyclicTask {
+    entry	sCyclic 	eCyclic;	/* 周期ハンドラの操作（タスクコンテキスト用）*/
+    entry	sTask 		eTask;		/* タスク操作（タスクコンテキスト用）*/
+	entry	siTask 		eiTask;		/* タスク操作（非タスクコンテキスト用）*/
+	call	sTaskBody 	cBody;  	/* タスク本体 */
+	attr {
+		/*
+		 *  TA_NULL     0x00U   デフォルト値
+		 * 	TA_STA 		0x01U   周期ハンドラが動作している状態
+		 */
+		ATR    	cycleAttribute 	= C_EXP("TA_NULL");
+		RELTIM 	cycleTime;
+		RELTIM 	cyclePhase 		= 0;
+		PRI		priority;
+		size_t	stackSize;
+	};
+	cell tTask Task {
+		/*
+         * 起動時に周期タスクを起動したい場合は
+         * セル生成時に
+		 * cyclicAttribute = C_EXP("TA_STA");を記述する
+		 */
+		attribute      = C_EXP("TA_NULL");
+		priority       = composite.priority;
+		stackSize      = composite.stackSize;
+
+		cTaskBody => composite.cBody;
+	};
+	cell tCyclicTaskActivator CyclicMain {
+		ciTask = Task.eiTask;
+	};
+	cell tCyclicHandler CyclicHandler {
+		ciHandlerBody = CyclicMain.eiBody;
+		attribute 	= composite.cycleAttribute;
+		cycleTime   = composite.cycleTime;
+		cyclePhase  = composite.cyclePhase;
+	};
+	composite.eTask   => Task.eTask;
+	composite.eiTask  => Task.eiTask;
+	composite.eCyclic => CyclicHandler.eCyclic;
+};
