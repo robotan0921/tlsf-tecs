@@ -123,6 +123,19 @@ cell tBanner Banner {
 
 cell tKernel Kernel {};
 
+celltype tMainTaskBody {
+	entry sTaskBody		eMainTask;	  		/* Mainタスク */
+};
+
+cell tMainTaskBody MainTaskBody {};
+
+cell tTask MainTask {
+	cTaskBody = MainTaskBody.eMainTask;
+
+	attribute = C_EXP("TA_ACT");
+	priority  = C_EXP("MAIN_PRIORITY");
+	stackSize = C_EXP("STACK_SIZE");
+};
 
 /* import a cdl file for mruby VM */
 import(<VM1.cdl>);

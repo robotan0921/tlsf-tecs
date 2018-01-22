@@ -36,6 +36,10 @@
 #endif
 
 #include <t_syslog.h>
+#include <ff.h>
+#include <ffarch.h>
+
+bool_t sd_open = false;
 
 /* 受け口関数 #_TEPF_# */
 /* #[<ENTRY_PORT>]# eBody
@@ -58,22 +62,31 @@ eBody_main(CELLIDX idx)
 	}
 	else {
 	} /* end if VALID_IDX(idx) */
-
+#ifdef TLSF_USE_SD
 	int time, size;
 	int count = 0;
+	FATFS fs;         	/* Work area (filesystem object) for logical drives */
+    FIL fp;      		/* File objects */
 
-	VAR_fp = fopen(ATTR_fileName, "a");
+	if (sd_open == false) {
+    	sd_open = true;
+		f_mount(&fs, "1:", 0);
+    	f_open(&fp, "1:log.csv", FA_WRITE | FA_CREATE_ALWAYS);
+    }
 
 	while (true) {
-		if (count++ > 100) {
-			fclose(VAR_fp);
-			VAR_fp = fopen(ATTR_fileName, "a");
-			count = 0;
-		}
-		cDataqueue_receive( &time );
+		if (count++ > 1000) {
+            f_sync(&fp);
+            count = 0;
+            slp_tsk();
+        }
+        cDataqueue_receive( &time );
 		cDataqueue_receive( &size );
-		fprintf(VAR_fp, "%d,%d\n", time, size);
+        f_printf(&fp, "%d,%d\n", time, size);
 	}
+#else
+
+#endif 	/* end of #ifdef TLSF_USE_SD */
 }
 
 /* #[<POSTAMBLE>]#

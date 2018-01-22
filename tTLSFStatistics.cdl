@@ -39,15 +39,15 @@ composite tTLSFMallocStatistics {
 
 	attr {
 		size_t 	memoryPoolSize 	= 1024 * 1024;
-		char 	*fileName =	"/log.csv";
-		uint_t 	queueSize = 1024;
+		char 	*fileName =	"log.csv";
+		uint_t 	queueSize = 1024 * 1024;
 		/*
 		 *  TA_NULL     0x00U   デフォルト値
 		 * 	TA_STA 		0x01U   周期ハンドラが動作している状態
 		 */
 		ATR 	cycleAttribute 	= C_EXP("TA_STA");
-		RELTIM 	cycleTime	 	= 40000;
-		RELTIM 	cyclePhase 		= 1000;
+		RELTIM 	cycleTime	 	= 5000;
+		RELTIM 	cyclePhase 		= 0;
 		PRI		priority 		= 9;
 		size_t	stackSize 		= 4096;
 	};
@@ -75,7 +75,7 @@ composite tTLSFMallocStatistics {
 		dataCount = composite.queueSize;
 	};
 
-	cell tCyclicTask SDTask {
+	cell tCyclicTaskW SDTask {
 		cBody = SDTaskBody.eBody;
 		/*
 		 *  TA_NULL     0x00U   デフォルト値
@@ -83,7 +83,7 @@ composite tTLSFMallocStatistics {
 		 */
 		cycleAttribute 	= C_EXP("TA_STA");
 		cycleTime 		= 5000000;
-		cyclePhase 		= 5000000;
+		cyclePhase 		= 1000000;
 		priority 		= composite.priority;
 		stackSize 		= composite.stackSize;
 	};
