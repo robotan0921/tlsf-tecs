@@ -103,8 +103,7 @@ eBody_main(CELLIDX idx)
 	cDataqueue_send( now_time - start_time );
 	cDataqueue_send( cMallocStatistics_getUsedSize() );
 #else
-	// syslog(LOG_EMERG, "[TLSF]: %d ms || %d bytes", now_time - start_time, cMallocStatistics_getUsedSize());
-	syslog(LOG_EMERG, "[TLSF]: %d bytes", cMallocStatistics_getUsedSize());
+	syslog_2(LOG_NOTICE, "[TLSF]: %d us || %d bytes", now_time - start_time, cMallocStatistics_getUsedSize());
 #endif 	/* end of #ifdef TLSF_USE_SD */
 #endif 	/* end of #ifdef SEQUENTIAL */
 }
